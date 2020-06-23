@@ -25,7 +25,7 @@
     jQuery.noConflict();
     (function( $ ) {
         $(function() {
-            document.title = "GHX Improved 0.3 UvaNetId";
+            document.title = "GHX Improved 0.3 UvANetId";
 
             if (window.location.href.indexOf("nw_createReq") > -1) {
                 $(function () {
