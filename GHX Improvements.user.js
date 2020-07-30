@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         GHX Improvements
-// @version      0.3
+// @version      0.4
 // @homepage     https://gist.github.com/rfkortekaas
 // @description  Improve GHX EBS
 // @author       @rfkortekaas
@@ -28,7 +28,7 @@
     jQuery.noConflict();
     (function( $ ) {
         $(function() {
-            document.title = "GHX Improved 0.3";
+            document.title = "GHX Improved 0.4";
 
             if (window.location.href.indexOf("login") > -1) {
                 window.location.href = "https://surfnet-ebs.ghx.com/synqeps/webroot/login_UVAHVA.cfm?skin=ghx/";
