@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name         GHX Improvements UvANetId
-// @version      0.3
+// @version      0.4
 // @homepage     https://gist.github.com/rfkortekaas
 // @description  Improve GHX EBS
 // @author       @rfkortekaas
 // @match        https://surfnet-ebs.ghx.com/*/nw_overview.cfm*
 // @match        https://surfnet-ebs.ghx.com/*/nw_createReq.cfm*
 // @match        https://surfnet-ebs.ghx.com/*/nw_supplierInfo.cfm*
+// @match        https://surfnet-ebs.ghx.com/*/nw_searchOrderReceipt.cfm*
 //
 // @resource     Select2 https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css
 // @require      https://code.jquery.com/jquery-3.5.1.min.js
@@ -25,7 +26,7 @@
     jQuery.noConflict();
     (function( $ ) {
         $(function() {
-            document.title = "GHX Improved 0.3 UvANetId";
+            document.title = "GHX Improved 0.4 UvANetId";
 
             if (window.location.href.indexOf("nw_createReq") > -1) {
                 $(function () {
@@ -48,6 +49,11 @@
                 $('select').on("change", function () {
                     var fld = $(this).children("option:selected").val();
                     location.href='nw_supplierInfo.cfm?topsupplier='+fld+'&orderID=';
+                });
+            }
+            else if (window.location.href.indexOf("nw_searchOrderReceipt") > -1) {
+                $(function () {
+                    $("select").select2();
                 });
             }
             else {
