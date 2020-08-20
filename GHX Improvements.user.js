@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         GHX Improvements
-// @version      0.4
+// @version      0.5
 // @homepage     https://gist.github.com/rfkortekaas
 // @description  Improve GHX EBS
 // @author       @rfkortekaas
@@ -9,6 +9,7 @@
 // @match        https://surfnet-ebs.ghx.com/*/nw_createReq.cfm*
 // @match        https://surfnet-ebs.ghx.com/*/nw_supplierInfo.cfm*
 // @match        https://surfnet-ebs.ghx.com/*/login.cfm*
+// @match        https://surfnet-ebs.ghx.com/*/nw_searchOrderReceipt.cfm*
 // @match        https://ebs.ghx.com/*
 //
 // @resource     Select2 https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css
@@ -28,7 +29,7 @@
     jQuery.noConflict();
     (function( $ ) {
         $(function() {
-            document.title = "GHX Improved 0.4";
+            document.title = "GHX Improved 0.5";
 
             if (window.location.href.indexOf("login") > -1) {
                 window.location.href = "https://surfnet-ebs.ghx.com/synqeps/webroot/login_UVAHVA.cfm?skin=ghx/";
@@ -60,6 +61,11 @@
                 $('select').on("change", function () {
                     var fld = $(this).children("option:selected").val();
                     location.href='nw_supplierInfo.cfm?topsupplier='+fld+'&orderID=';
+                });
+            }
+            else if (window.location.href.indexOf("nw_searchOrderReceipt") > -1) {
+                $(function () {
+                    $("select").select2();
                 });
             }
             else {
