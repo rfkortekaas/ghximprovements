@@ -1,6 +1,7 @@
+
 // ==UserScript==
 // @name         GHX Improvements
-// @version      0.6
+// @version      0.7
 // @homepage     https://github.com/rfkortekaas/ghximprovements/blob/master/GHX Improvements.user.js?raw=true
 // @description  Improve GHX EBS
 // @author       @rfkortekaas
@@ -21,6 +22,23 @@
 // @run-at       document-start
 // ==/UserScript==
 
+GM_addStyle ( `
+    .inputcount,
+    #ghx-i-hide{
+        font:inherit;
+        margin:0;
+        padding:0;
+    }
+    .inputcount{
+        border:none;
+        min-width:10px;
+    }
+    .ghx-i-hide{
+        display:none;
+        white-space:pre;
+    }
+` );
+
 (function() {
     'use strict';
     var Select2 = GM_getResourceText("Select2");
@@ -29,7 +47,7 @@
     jQuery.noConflict();
     (function( $ ) {
         $(function() {
-            document.title = "GHX Improved 0.6";
+            document.title = "GHX Improved 0.7";
 
             if (window.location.href.indexOf("login") > -1) {
                 window.location.href = "https://surfnet-ebs.ghx.com/synqeps/webroot/login_UVAHVA.cfm?skin=ghx/";
@@ -68,14 +86,19 @@
                     $("select").select2();
                 });
             }
-            else {
-                var els = document.getElementsByClassName('inputcount'), elLength = els.length;
+            else if (window.location.href.indexOf("nw_overview") > -1) {
+                $(".inputcount").each(function ( index ) {
+                    $($(".inputcount")[index]).before('<span class="ghx-i-hide '+index+'"></span>');
+                });
 
-                for (var i = 0; i < elLength; i++) {
-                    els.item(i).removeAttribute('readonly');
-                };
+                setInterval(function(){
+                    $(".inputcount").each(function ( index ) {
+                        $('.ghx-i-hide.'+index).text($($(".inputcount")[index]).val());
+                        $($(".inputcount")[index]).width($('.ghx-i-hide.'+index).width());
+                    });
+                }, 100);
             }
         });
     })(jQuery);
-
 })();
+
