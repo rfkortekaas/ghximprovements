@@ -80,6 +80,7 @@ GM_addStyle ( `
             else if (window.location.href.indexOf("nw_overview") > -1) {
                 $(".inputcount").each(function ( index ) {
                     $($(".inputcount")[index]).before('<span class="ghx-i-hide '+index+'"></span>');
+                    $($(".inputcount")[index]).removeAttr('readonly');
                 });
 
                 setInterval(function(){
