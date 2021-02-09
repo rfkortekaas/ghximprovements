@@ -1,7 +1,7 @@
 
 // ==UserScript==
 // @name         GHX Improvements
-// @version      0.7
+// @version      0.8
 // @homepage     https://github.com/rfkortekaas/ghximprovements/blob/master/GHX Improvements.user.js?raw=true
 // @description  Improve GHX EBS
 // @author       @rfkortekaas
@@ -47,7 +47,7 @@ GM_addStyle ( `
     jQuery.noConflict();
     (function( $ ) {
         $(function() {
-            document.title = "GHX Improved 0.7";
+            document.title = "GHX Improved 0.8";
 
             if (window.location.href.indexOf("login") > -1) {
                 window.location.href = "https://surfnet-ebs.ghx.com/synqeps/webroot/login_UVAHVA.cfm?skin=ghx/";
@@ -89,6 +89,7 @@ GM_addStyle ( `
             else if (window.location.href.indexOf("nw_overview") > -1) {
                 $(".inputcount").each(function ( index ) {
                     $($(".inputcount")[index]).before('<span class="ghx-i-hide '+index+'"></span>');
+                    $($(".inputcount")[index]).removeAttr('readonly');
                 });
 
                 setInterval(function(){
