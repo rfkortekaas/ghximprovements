@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         GHX Improvements UvANetId
-// @version      0.7
+// @version      0.8
 // @homepage     https://github.com/rfkortekaas/ghximprovements/blob/master/GHX Improvements UvANetID.user.js?raw=true
 // @description  Improve GHX EBS
 // @author       @rfkortekaas
@@ -44,7 +44,7 @@ GM_addStyle ( `
     jQuery.noConflict();
     (function( $ ) {
         $(function() {
-            document.title = "GHX Improved 0.7 UvANetId";
+            document.title = "GHX Improved 0.8 UvANetId";
 
             if (window.location.href.indexOf("https://ebs") > -1) {
                 window.location.href = "https://www.uva.nl/orderdirect";
