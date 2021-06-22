@@ -1,7 +1,7 @@
 
 // ==UserScript==
 // @name         GHX Improvements
-// @version      1.0
+// @version      1.1
 // @homepage     https://github.com/rfkortekaas/ghximprovements
 // @updateURL    https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true
 // @downloadURL  https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true
@@ -13,6 +13,7 @@
 // @match        https://surfnet-ebs.ghx.com/*/nw_supplierInfo.cfm*
 // @match        https://surfnet-ebs.ghx.com/*/login.cfm*
 // @match        https://surfnet-ebs.ghx.com/*/nw_searchOrderReceipt.cfm*
+// @match        https://surfnet-ebs.ghx.com/*/nw_searchOrder.cfm*
 // @match        https://ebs.ghx.com/*
 //
 // @resource     Select2 https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css
@@ -49,7 +50,7 @@ GM_addStyle ( `
     jQuery.noConflict();
     (function( $ ) {
         $(function() {
-            document.title = "GHX Improved 1.0";
+            document.title = "GHX Improved 1.1";
 
             if (window.location.href.indexOf("login") > -1) {
                 window.location.href = "https://surfnet-ebs.ghx.com/synqeps/webroot/login_UVAHVA.cfm?skin=ghx/";
@@ -83,7 +84,7 @@ GM_addStyle ( `
                     location.href='nw_supplierInfo.cfm?topsupplier='+fld+'&orderID=';
                 });
             }
-            else if (window.location.href.indexOf("nw_searchOrderReceipt") > -1) {
+            else if (window.location.href.indexOf("nw_searchOrderReceipt.cfm") > -1) {
                 $(function () {
                     $("select").select2();
                 });
@@ -100,6 +101,14 @@ GM_addStyle ( `
                         $($(".inputcount")[index]).width($('.ghx-i-hide.'+index).width());
                     });
                 }, 100);
+            }
+            else if (window.location.href.indexOf("nw_searchOrder.cfm") > -1) {
+                if (document.referrer.indexOf("nw_searchOrder.cfm") == -1) {
+                    var Older = new Date();
+                    Older.setDate(Older.getDate() - 100);
+                    document.getElementById('reqdatefrom').value=Older.toISOString().slice(0,10);
+                    $( ".buttonSmall" ).trigger( "click" );
+                }
             }
         });
     })(jQuery);
