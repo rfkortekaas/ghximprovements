@@ -1,26 +1,31 @@
-# GHX Improvements for UvA
+# GHX Improvements for UvA:
 
 - Install [TamperMonkey](https://www.tampermonkey.net/) in your browser
-- Choose one of the following links to install the GHX Improvements (A TamperMonkey install screen will appear to install the userscript).
-  - [GHX Improvements with UvANetID Login](https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements%20UvANetID.user.js?raw=true)
-  - [GHX Improvements with direct login (group account)](https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true)
+- Install the GHX Improvements (A TamperMonkey install screen will appear to install the userscript).
+  - [GHX Improvements](https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true)
 - After clicking install the tab closes automatically and the userscript is installed
 - You can verify the installation using the TamperMonkey dashboard (Click on the tampermonkey icon <img width="16" alt="image" src="https://user-images.githubusercontent.com/1042678/146504143-95bfacf3-d9af-4d0d-8490-f43430d86638.png"> and then `Dashboard`). 
 
 
 Updates will be installed automatically if new improvements are added.
 
-## The following improvements are part of the latest version:
-
-### Version specific improvements
-- UvaNetID version
-  - Redirect to the correct website when using the old URL
-- Non-UvANetId 
-  - Redirect to the correct website when using the old URL or when on the wrong login page (the login page differs from the UvANetID login page)
-
-### Other improvements
+### Improvements
+- Added a configuration menu for the userscript
+  - When clicking the tampermonkey icon <img width="16" alt="image" src="https://user-images.githubusercontent.com/1042678/146504143-95bfacf3-d9af-4d0d-8490-f43430d86638.png"> a configuration option appears under the active userscript
+- Added a configuration option to select the used account types (UvAnetID and/or groupaccount)
+  - This will add an additional button to the login page (UvAnetID Login) to go to the Single sign-on page and login via your UvAnetID
+  - Logging in with the groupaccount can be done using the GHX login form
+- Added a configuration option to change the default delivery location
+- Added a configuration option to set a default order unit for Free text requests
+- Added a configuration option to set a default cost type for Free text requests
+- Added a configuration option to select a default VAT amount
+- Added a configuration option to open the PunchOut Webstores in a tab instead of a new window
+- Improved the layout for a free text request order item
+- Added a price modal to be able to fill in prices including VAT and automatically calculating the price without VAT.
+- Redirect to the correct website when using the old URL or when on the wrong login page
+- Added a validate function to replace a comma with a dot on the price field
 - Add search bar to supplier field to New Request, Supplier Information and Searching for orders.
-  -	The supplier field in GHX is a standard select fiels in which you only can search with the starting letter of a supplier (and due to case and sorting this doesn't work optimal). This change adds a search bar to the supplier field and allows you to search case-insensitive for a part of the suppliers name.
+  - The supplier field in GHX is a standard select fiels in which you only can search with the starting letter of a supplier (and due to case and sorting this doesn't work optimal). This change adds a search bar to the supplier field and allows you to search case-insensitive for a part of the suppliers name.
 - Improved visibility in the Shopping Cart (WBS-Element)
   - The WBS-Element in the Shopping Cart view is not completly visisble (input field is to small). This improvement changes the width of the WBS-Element input field. 
 - Improved functionality for Farnell: Ability to change quantity to 0 to be able to delete an item. 
