@@ -8,11 +8,9 @@
 // @downloadURL  https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true
 // @description  Improve GHX EBS
 // @author       @rfkortekaas
-// @match        https://surfnet-ebs.ghx.com/*/nw*.cfm*
-// @match        https://surfnet-ebs.ghx.com/*/index.cfm*
-// @match        https://surfnet-ebs.ghx.com/*/login.cfm*
-// @match        https://surfnet-ebs.ghx.com/*/login_UVAHVA.cfm*
-// @match        https://ebs.ghx.com/*
+// @match        https://surfnet-ebs.ghx.com/*
+// @match        https://ebsnl.ghxeurope.com/*
+// @match        http://ebs.ghx.com/*
 //
 // @resource     Select2 https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css
 // @resource     JQuery_Modal https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css
@@ -78,15 +76,15 @@ var cfg = new MonkeyConfig({
     menuCommand: true,
     params:
     {
-        account_uvanetid:
+        account_uvahva:
         {
-            name: 'UvAnetID',
+            label: 'UvAnetID/HvA-ID',
             type: 'checkbox',
             default: true
         },
         account_groupaccount:
         {
-            name: 'Group Account',
+            label: 'Group Account',
             type: 'checkbox',
             default: true
         },
@@ -133,36 +131,36 @@ var cfg = new MonkeyConfig({
         $(function() {
             document.title = "GHX Improved " + GM_info.script.version;
             var acc_ga = cfg.get('account_groupaccount');
-            var acc_uva = cfg.get('account_uvanetid');
+            var acc_uvahva = cfg.get('account_uvahva');
             var dflt_del_loc = cfg.get('default_delivery_location');
             var dflt_order_unit = cfg.get('default_order_unit');
             var dflt_cost_type = cfg.get('default_cost_type');
             var dflt_vat = cfg.get('default_vat');
             var open_in_tab = cfg.get('open_in_tab');
 
-            if ((window.location.href.indexOf("login.") > -1) || (window.location.href.indexOf("index") > -1))
+            if ((window.location.href.indexOf("login.") > -1) || (window.location.href.indexOf("ebs.ghx") > -1))
             {
-                if ( acc_uva === true && acc_ga === false)
+                if ( acc_uvahva === true && acc_ga === false)
                 {
-                    window.location.href = 'https://surfnet-ebs.ghx.com/surfnet';
+                    window.location.href = 'https://ebsnl.ghxeurope.com/synqeps/webroot/login/uvahva.cfm';
                 }
                 else
                 {
-                    window.location.href = "https://surfnet-ebs.ghx.com/synqeps/webroot/login_UVAHVA.cfm?skin=ghx/";
+                    window.location.href = "https://ebsnl.ghxeurope.com/synqeps/webroot/login_UVAHVA.cfm?skin=ghx/";
                 }
             }
             else if (window.location.href.indexOf("login") > -1) {
-                if ( acc_uva === true && acc_ga === false)
+                if ( acc_uvahva === true && acc_ga === false)
                 {
-                    // If only the UvAnetID account is selected forward to the correct login page
-                    window.location.href = 'https://surfnet-ebs.ghx.com/surfnet';
+                    // If only the UvAnetID/HvA-ID account is selected forward to the correct login page
+                    window.location.href = 'https://ebsnl.ghxeurope.com/synqeps/webroot/login/uvahva.cfm';
                 }
-                else if ( acc_uva === true && acc_ga === true)
+                else if ( acc_uvahva === true && acc_ga === true)
                 {
                     document.forms.loginForm.removeAttribute('action');
                     document.forms.loginForm.removeAttribute('onsubmit');
                     $( ".buttonSmall" ).attr('formaction', 'login_UVAHVA_.cfm').attr('value', 'UvA Groupaccount Login').attr('onclick', 'return(checkForm());');
-                    $( ".buttonSmall" ).clone().attr('formaction','https://surfnet-ebs.ghx.com/surfnet').attr('value', 'UvAnetID Login').attr('onclick', '').appendTo("#inlog-button");
+                    $( ".buttonSmall" ).clone().attr('formaction','https://ebsnl.ghxeurope.com/synqeps/webroot/login/uvahva.cfm').attr('value', 'UvAnetID Login').attr('onclick', '').appendTo("#inlog-button");
                 }
             }
             else if (window.location.href.indexOf("nw_createReq") > -1)

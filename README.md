@@ -1,4 +1,4 @@
-# GHX Improvements for UvA:
+# GHX Improvements for UvA and HvA:
 
 - Install [TamperMonkey](https://www.tampermonkey.net/) in your browser
 - Install the GHX Improvements (A TamperMonkey install screen will appear to install the userscript).
@@ -12,8 +12,8 @@ Updates will be installed automatically if new improvements are added.
 ### Improvements
 - Added a configuration menu for the userscript
   - When clicking the tampermonkey icon <img width="16" alt="image" src="https://user-images.githubusercontent.com/1042678/146504143-95bfacf3-d9af-4d0d-8490-f43430d86638.png"> a configuration option appears under the active userscript
-- Added a configuration option to select the used account types (UvAnetID and/or groupaccount)
-  - This will add an additional button to the login page (UvAnetID Login) to go to the Single sign-on page and login via your UvAnetID
+- Added a configuration option to select the used account types (UvAnetID/HvA-ID and/or groupaccount)
+  - This will add an additional button to the login page (UvAnetID/HvA-ID Login) to go to the Single sign-on page and login via your UvAnetID or HvA-ID
   - Logging in with the groupaccount can be done using the GHX login form
 - Added a configuration option to change the default delivery location
 - Added a configuration option to set a default order unit for Free text requests
