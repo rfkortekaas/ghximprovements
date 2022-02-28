@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GHX Improvements
 // @namespace    rfkortekaas
-// @version      1.2
+// @version      1.2.1
 // @license      MIT
 // @homepage     https://github.com/rfkortekaas/ghximprovements
 // @updateURL    https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true
@@ -228,13 +228,13 @@ var cfg = new MonkeyConfig({
                     $(this).replaceWith(input);
                 });
 
-                // Set the validate function on focus out for the price field
+                // Add the price edit button and set the validate function on focus out for the price field
                 $('input[id^="price"]').each(function (index) {
                     if ( $(this).attr('id') != 'priceFAV')
                     {
                         $(this).parent().addClass('no-left-padding').removeClass('align-center').before(`
                             <td class="td-in no-right-padding">
-                                <a id="mdlPrice${index}" href="#mdlPrice" data-modal data-index="${index}">
+                                <a id="mdlPrice${index+1}" href="#mdlPrice" data-modal data-index="${index+1}">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24" width="24" fill="currentColor" style="display: inline-block">
                                         <path d="M9 13v-2a3 3 0 1 1 0-6V4a1 1 0 1 1 2 0v1h.022A2.978 2.978 0 0 1 14 7.978a1 1 0 0 1-2 0A.978.978 0 0 0 11.022 7H11v2a3 3 0 0 1 0 6v1a1 1 0 0 1-2 0v-1h-.051A2.949 2.949 0 0 1 6 12.051a1 1 0 1 1 2 0 .95.95 0 0 0 .949.949H9zm2 0a1 1 0 0 0 0-2v2zM9 7a1 1 0 1 0 0 2V7zm1 13C4.477 20 0 15.523 0 10S4.477 0 10 0s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"></path>
                                     </svg>
@@ -469,6 +469,19 @@ function ExtendedNewLine(order_unit, cost_type, vat)
     $('textarea[id^="unlistedproduct"]').last().replaceWith(input2);
     // Reduce the size of the quantity field
     $('input[id^="quantity"]').last().attr('size', '4');
+
+    // Add the price edit button and set the validate function on focus out for the price field
+    var mdlIndex = $('input[id^="price"][type="text"]').last().attr('id').replace(/\D/g,'');
+    $('input[id^="price"][type="text"]').last().parent().addClass('no-left-padding').removeClass('align-center').before(`
+            <td class="td-in no-right-padding">
+                <a id="mdlPrice${mdlIndex}" href="#mdlPrice" data-modal data-index="${mdlIndex}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24" width="24" fill="currentColor" style="display: inline-block">
+                        <path d="M9 13v-2a3 3 0 1 1 0-6V4a1 1 0 1 1 2 0v1h.022A2.978 2.978 0 0 1 14 7.978a1 1 0 0 1-2 0A.978.978 0 0 0 11.022 7H11v2a3 3 0 0 1 0 6v1a1 1 0 0 1-2 0v-1h-.051A2.949 2.949 0 0 1 6 12.051a1 1 0 1 1 2 0 .95.95 0 0 0 .949.949H9zm2 0a1 1 0 0 0 0-2v2zM9 7a1 1 0 1 0 0 2V7zm1 13C4.477 20 0 15.523 0 10S4.477 0 10 0s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"></path>
+                    </svg>
+                </a>
+            </td>
+            `);
+    $('input[id^="price"][type="text"]').last().attr('onfocusout', 'ValidatePrice(event)');
 }
 
 // Price cannot contain a comma; should be replaced with a dot
