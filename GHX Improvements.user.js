@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GHX Improvements
 // @namespace    rfkortekaas
-// @version      1.3
+// @version      1.4
 // @license      MIT
 // @homepage     https://github.com/rfkortekaas/ghximprovements
 // @updateURL    https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true
@@ -163,7 +163,7 @@ var cfg = new MonkeyConfig({
                     $( ".buttonSmall" ).clone().attr('formaction','https://ebsnl.ghxeurope.com/synqeps/webroot/login/uvahva.cfm').attr('value', 'UvAnetID Login').attr('onclick', '').appendTo("#inlog-button");
                 }
             }
-            else if (window.location.href.indexOf("nw_createReq") > -1)
+            else if (window.location.href.indexOf("nw_createReq") > -1 && $(".button_more").length)
             {
                 // Replace the supplier selectbox with an improved searchable select box
                 $(function ()
@@ -257,8 +257,8 @@ var cfg = new MonkeyConfig({
                 $( "th:contains('Kostensoort')" ).attr('width', '6%').addClass('align-center').removeClass('align-right').html('Kosten<br />soort');
                 $( "th:contains('Amount'), th:contains('Aantal')" ).addClass('align-center').removeClass('align-right');
                 $( "th:contains('VAT'), th:contains('BTW')" ).addClass('align-center').removeClass('align-right');
-                $( "th:contains('Price')" ).attr('width', '25%').attr('colspan', '2').html('Price (€)<br />ex. VAT');
-                $( "th:contains('Prijs')" ).attr('width', '25%').attr('colspan', '2').html('Prijs (€)<br />ex. BTW');
+                $( "th:contains('Price')" ).attr('width', '20%').attr('colspan', '2').html('Price (€)<br />ex. VAT');
+                $( "th:contains('Prijs')" ).attr('width', '20%').attr('colspan', '2').html('Prijs (€)<br />ex. BTW');
 
                 // Append the new price modal to the body
                 $("body").append(`
@@ -281,7 +281,9 @@ var cfg = new MonkeyConfig({
                 $('a[data-modal]').click(function(event)
                 {
                     // Set the current row index
-                    currentIndex = $(this).data('index') + 1;
+                    currentIndex = $(this).data('index');
+                    currentVAT = parseFloat('1.'+$('select[name^="vat"][name$="'+currentIndex+'"]').find(':selected').html().replace(/\D/g,''), 10);
+                    console.log(currentVAT);
                     // Only allow model close by clicking the close button
                     $(this).modal({ clickClose: false,});
                     // Enter the modal name base on the description
@@ -497,3 +499,4 @@ var script = document.createElement('script');
 script.appendChild(document.createTextNode(ExtendedNewLine));
 script.appendChild(document.createTextNode(ValidatePrice));
 (document.body || document.head || document.documentElement).appendChild(script);
+
