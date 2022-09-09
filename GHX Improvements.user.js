@@ -278,7 +278,7 @@ var cfg = new MonkeyConfig({
                 var currentIndex = 0;
 
                 // Show the modal when clicking on the row icon and fill in default data
-                $('a[data-modal]').click(function(event)
+                $(document).on("click", 'a[data-modal]', function()
                 {
                     // Set the current row index
                     currentIndex = $(this).data('index');
