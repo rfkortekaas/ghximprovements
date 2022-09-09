@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GHX Improvements
 // @namespace    rfkortekaas
-// @version      1.5
+// @version      1.6
 // @license      MIT
 // @homepage     https://github.com/rfkortekaas/ghximprovements
 // @updateURL    https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true
@@ -45,7 +45,6 @@ GM_addStyle ( `
         display:none;
         white-space:pre;
     }
-
     .modal span {
         display: flex;
         justify-content: flex-end;
@@ -266,7 +265,6 @@ var cfg = new MonkeyConfig({
                     <div id="mdlPrice" class="modal">
                         <form style="display: flex; flex-direction: column;">
                             <span><label for="mdlVAT">VAT</label><select><option data-vat="1">0%</option><option data-vat="1.09">9%</option><option data-vat="1.21">21%</option></select></span>
-
                             <span><label for="mdlPriceInputInc">Incl. VAT</label><input type="text" id="mdlPriceInputInc"></span>
                             <span><label for="mdlPriceInputExc">Excl. VAT</label><input type="text" id="mdlPriceInputExc"></span>
                         </form
@@ -409,7 +407,7 @@ var cfg = new MonkeyConfig({
                     $( ".buttonSmall" ).trigger( "click" );
                 }
             }
-            else if (window.location.href.indexOf("nw_browse") > -1)
+            else if ((window.location.href.indexOf("nw_browse") > -1) || (window.location.href.indexOf("nw_productRange") > -1))
             {
                 if (open_in_tab)
                 {
@@ -417,11 +415,14 @@ var cfg = new MonkeyConfig({
                     $(".shop-button").each(function()
                     {
                         // Select the existing onClick attribute and extract the catalogid from this
-                        var click = $(this).attr("onClick");
-                        var catalogid = click.substring(click.indexOf("(")+2, click.indexOf(")")-1);
-                        var orderid = $('#orderID').val();
-                        // Create the new onClick function and replace the exisiting
-                        $(this).attr("onclick",'window.open("getOCI.cfm?ORDERID='+orderid+'&CATALOGID='+catalogid+'", "_blank")');
+                        var click = $(this).attr("onclick");
+                        if (click.indexOf('selectOCICatalog') > -1)
+                        {
+                            var catalogid = click.substring(click.indexOf("(")+2, click.indexOf(")")-1);
+                            var orderid = $('#orderID').val();
+                            // Create the new onClick function and replace the exisiting
+                            $(this).attr("onclick",'window.open("getOCI.cfm?ORDERID='+orderid+'&CATALOGID='+catalogid+'", "_blank")');
+                    }
                     });
                 }
             }
@@ -499,4 +500,3 @@ var script = document.createElement('script');
 script.appendChild(document.createTextNode(ExtendedNewLine));
 script.appendChild(document.createTextNode(ValidatePrice));
 (document.body || document.head || document.documentElement).appendChild(script);
-
