@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GHX Improvements
 // @namespace    rfkortekaas
-// @version      1.6
+// @version      1.7
 // @license      MIT
 // @homepage     https://github.com/rfkortekaas/ghximprovements
 // @updateURL    https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true
@@ -419,7 +419,8 @@ var cfg = new MonkeyConfig({
                         if (click.indexOf('selectOCICatalog') > -1)
                         {
                             var catalogid = click.substring(click.indexOf("(")+2, click.indexOf(")")-1);
-                            var orderid = $('#orderID').val();
+                            var orderid = getUrlParameter('orderID');
+                            console.log(orderid);
                             // Create the new onClick function and replace the exisiting
                             $(this).attr("onclick",'window.open("getOCI.cfm?ORDERID='+orderid+'&CATALOGID='+catalogid+'", "_blank")');
                     }
@@ -495,8 +496,25 @@ function ValidatePrice(event)
     });
 }
 
+function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+    return false;
+};
+
 // Create a new HTML Script element to inject javascript functions in the page context
 var script = document.createElement('script');
 script.appendChild(document.createTextNode(ExtendedNewLine));
 script.appendChild(document.createTextNode(ValidatePrice));
+script.appendChild(document.createTextNode(getUrlParameter));
 (document.body || document.head || document.documentElement).appendChild(script);
