@@ -342,7 +342,7 @@ var cfg = new MonkeyConfig({
                     $('select[name^="vat"][name$="'+currentIndex+'"] option:contains("'+$('.modal select').find(':selected').html().trim()+'")').attr('selected', 'selected');
                 });
             }
-            else if (window.location.href.indexOf("nw_order") > -1)
+            else if (window.location.href.indexOf("nw_order.") > -1)
             {
                 // Change default delivery location based on cfg `default_delivery_location`
                 // Only change the delivery location on the first entry of a new order (based on filled in title)
