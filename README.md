@@ -32,3 +32,5 @@ Updates will be installed automatically if new improvements are added.
   - By default the Farnell integration doesn't support deleting an item or changing the quantity for an item. With this improvement you are able to change the quantity of an item and also change it to 0 to delete an item from the shopping cart
 - Improved `Orders in bewerking` to change the default from date to current date minus 100 days.
   - The `Orders in bewerking` overview has a limited date range which causes that orders not finished will disappear in the view over time. This fix prevents long open orders to disappear
+- Added a configuration option for the pilot hardware orders (CMDB registered orders)
+  - When enabled a popup will show when creating a new order. The popup will asks for the HvA-ID/UvAnetID and the MyPUP-ID. If data is filled it will be added to the order fields and the title will be `Pilot ` with the HvA-ID/UvAnetID. If no MyPUP-ID is entered the original delivery location will be used (either from the profile or the delivery location configuration option)

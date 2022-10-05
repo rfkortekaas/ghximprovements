@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GHX Improvements
 // @namespace    rfkortekaas
-// @version      1.7
+// @version      1.8
 // @license      MIT
 // @homepage     https://github.com/rfkortekaas/ghximprovements
 // @updateURL    https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true
@@ -28,7 +28,7 @@
 // ==/UserScript==
 
 /* jshint esversion: 5 */
-/* globals $, MonkeyConfig, jQuery, newLine */
+/* globals $, MonkeyConfig, jQuery, newLine, Cookies */
 
 GM_addStyle ( `
     .inputcount,
@@ -114,6 +114,12 @@ var cfg = new MonkeyConfig({
             name: 'Open shop in tab',
             type: 'checkbox',
             default: true
+        },
+        pilot_hardware:
+        {
+            name: 'Pilot CMDB hardware',
+            type: 'checkbox',
+            default: false
         }
     }
 });
@@ -136,6 +142,7 @@ var cfg = new MonkeyConfig({
             var dflt_cost_type = cfg.get('default_cost_type');
             var dflt_vat = cfg.get('default_vat');
             var open_in_tab = cfg.get('open_in_tab');
+            var pilot_hardware = cfg.get('pilot_hardware');
 
             if ((window.location.href.indexOf("login.") > -1) || (window.location.href.indexOf("ebs.ghx") > -1))
             {
@@ -259,7 +266,7 @@ var cfg = new MonkeyConfig({
                 $( "th:contains('Price')" ).attr('width', '20%').attr('colspan', '2').html('Price (€)<br />ex. VAT');
                 $( "th:contains('Prijs')" ).attr('width', '20%').attr('colspan', '2').html('Prijs (€)<br />ex. BTW');
 
-                // Append the new price modal to the body
+                // Append the price modal to the body
                 $("body").append(`
                     <!-- Modal HTML embedded directly into document -->
                     <div id="mdlPrice" class="modal">
@@ -342,6 +349,33 @@ var cfg = new MonkeyConfig({
                 if (dflt_del_loc && $('#title').val() === '')
                 {
                     $('#deliverylocation').val(dflt_del_loc);
+                }
+                if (pilot_hardware)
+                {
+                    // Append the hardware pilot modal to the body
+                    $("body").append(`
+                        <!-- Modal HTML embedded directly into document -->
+                        <div id="mdlPilot" class="modal">
+                            <div class="modal-header">
+                                <h2 class="modal-title" id="modal-title">Hardware pilot required information</h2>
+                            </div>
+                            <form style="display: flex; flex-direction: column;">
+                                <span><label for="mdlId">HvA-ID/UvAnetId</label><input type="text" id="mdlId"></span>
+                                <span><label for="mdlMyPUP">MyPup-ID</label><input type="text" id="mdlMyPUP"></span>
+                            </form
+                        </div>
+                    `);
+
+                    $('#mdlPilot').modal();
+                    // On modal close update the current row.
+                    $('.modal').on($.modal.BEFORE_CLOSE, function(event, modal) {
+                        if ($('.modal #mdlId').val() != "") {
+                            $('#title').val('Pilot ' + $('.modal #mdlId').val());
+                        }
+                        if ($('.modal #mdlMyPUP').val() != "") {
+                            $('#deliverylocation').val($('.modal #mdlMyPUP').val());
+                        }
+                    });
                 }
             }
             else if (window.location.href.indexOf("nw_supplierInfo") > -1)
