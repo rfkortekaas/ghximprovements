@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GHX Improvements
 // @namespace    rfkortekaas
-// @version      1.81
+// @version      1.82
 // @license      MIT
 // @homepage     https://github.com/rfkortekaas/ghximprovements
 // @updateURL    https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true
@@ -288,7 +288,6 @@ var cfg = new MonkeyConfig({
                     // Set the current row index
                     currentIndex = $(this).data('index');
                     currentVAT = parseFloat('1.'+$('select[name^="vat"][name$="'+currentIndex+'"]').find(':selected').html().replace(/\D/g,''), 10);
-                    console.log(currentVAT);
                     // Only allow model close by clicking the close button
                     $(this).modal({ clickClose: false,});
                     // Enter the modal name base on the description
@@ -350,7 +349,8 @@ var cfg = new MonkeyConfig({
                 {
                     $('#deliverylocation').val(dflt_del_loc);
                 }
-                if (pilot_hardware)
+                var orderid = getUrlParameter('orderid');
+                if (pilot_hardware && (!orderid))
                 {
                     // Append the hardware pilot modal to the body
                     $("body").append(`
@@ -454,7 +454,6 @@ var cfg = new MonkeyConfig({
                         {
                             var catalogid = click.substring(click.indexOf("(")+2, click.indexOf(")")-1);
                             var orderid = getUrlParameter('orderID');
-                            console.log(orderid);
                             // Create the new onClick function and replace the exisiting
                             $(this).attr("onclick",'window.open("getOCI.cfm?ORDERID='+orderid+'&CATALOGID='+catalogid+'", "_blank")');
                     }
