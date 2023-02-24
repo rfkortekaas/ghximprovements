@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GHX Improvements
 // @namespace    rfkortekaas
-// @version      1.82
+// @version      1.83
 // @license      MIT
 // @homepage     https://github.com/rfkortekaas/ghximprovements
 // @updateURL    https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true
@@ -18,6 +18,7 @@
 // @require      https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js
 // @require      https://cdn.jsdelivr.net/gh/rfkortekaas/MonkeyConfig@master/monkeyconfig.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js
 //
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
@@ -28,7 +29,7 @@
 // ==/UserScript==
 
 /* jshint esversion: 5 */
-/* globals $, MonkeyConfig, jQuery, newLine, Cookies */
+/* globals $, MonkeyConfig, jQuery, newLine, Cookies, moment */
 
 GM_addStyle ( `
     .inputcount,
@@ -398,11 +399,28 @@ var cfg = new MonkeyConfig({
                 $(function () {
                     $("select").select2();
                 });
+
+                $('form[name="searchForm"]').attr('method', 'GET');
+
+                var orderstatus = getUrlParameter('orderstatus');
+                if (orderstatus == '25,32') {
+                    $('td[id^="td-date"]').each(function (index) {
+                        if ($(this).is(":even")) {
+                            if (moment($(this).html(), 'DD-MM-YYYY').isBefore(moment(), 'day')) {
+                                $(this).parent().css('background', 'red');
+                            }
+                            else if (moment($(this).html(), 'DD-MM-YYYY').isSame(moment(), 'day')) {
+                                $(this).parent().css('background', 'green');
+                            }
+                        }
+                    });
+                }
             }
             else if (window.location.href.indexOf("nw_overview") > -1)
             {
-                if ($("a[href^='nw_orderReceipt'") == undefined)
+                if ($("a[href^='nw_orderReceipt'").length == 0)
                 {
+                    console.log('ww');
                     $(".inputcount").each(function ( index )
                     {
                         // Insert span element before input to improve layout
@@ -413,6 +431,7 @@ var cfg = new MonkeyConfig({
                 }
                 else
                 {
+                    console.log('order');
                     // Add `readonly` attribute to the amount input if send to the supplier
                     $(".inputcount").each(function ( index )
                     {
