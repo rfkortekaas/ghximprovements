@@ -405,7 +405,7 @@ var cfg = new MonkeyConfig({
                 var orderstatus = getUrlParameter('orderstatus');
                 if (orderstatus == '25,32') {
                     $('td[id^="td-date"]').each(function (index) {
-                        if ($(this).is(":even")) {
+                        if ($(this).is(":odd")) {
                             if (moment($(this).html(), 'DD-MM-YYYY').isBefore(moment(), 'day')) {
                                 $(this).parent().css('background', 'red');
                             }
