@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GHX Improvements
 // @namespace    rfkortekaas
-// @version      1.83
+// @version      1.84
 // @license      MIT
 // @homepage     https://github.com/rfkortekaas/ghximprovements
 // @updateURL    https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true
@@ -116,6 +116,12 @@ var cfg = new MonkeyConfig({
             type: 'checkbox',
             default: true
         },
+        color_order_lines:
+        {
+            name: 'Color order lines in order receipt page',
+            type: 'checkbox',
+            default: true
+        },
         pilot_hardware:
         {
             name: 'Pilot CMDB hardware',
@@ -144,6 +150,7 @@ var cfg = new MonkeyConfig({
             var dflt_vat = cfg.get('default_vat');
             var open_in_tab = cfg.get('open_in_tab');
             var pilot_hardware = cfg.get('pilot_hardware');
+            var color_order_lines = cfg.get('color_order_lines');
 
             if ((window.location.href.indexOf("login.") > -1) || (window.location.href.indexOf("ebs.ghx") > -1))
             {
@@ -402,18 +409,23 @@ var cfg = new MonkeyConfig({
 
                 $('form[name="searchForm"]').attr('method', 'GET');
 
-                var orderstatus = getUrlParameter('orderstatus');
-                if (orderstatus == '25,32') {
-                    $('td[id^="td-date"]').each(function (index) {
-                        if ($(this).is(":odd")) {
+                if (color_order_lines) {
+                    var orderstatus = getUrlParameter('orderstatus');
+                    var index = 1
+                    $("th:contains('Afleverdatum'), th:contains('Delivery')").prevAll('th').each(function() {
+                        index += this.colSpan;
+                    });
+
+                    if (orderstatus == '25,32') {
+                        $('tr:gt(0) td:nth-child('+index+')').each(function () {
                             if (moment($(this).html(), 'DD-MM-YYYY').isBefore(moment(), 'day')) {
                                 $(this).parent().css('background', 'red');
                             }
                             else if (moment($(this).html(), 'DD-MM-YYYY').isSame(moment(), 'day')) {
                                 $(this).parent().css('background', 'green');
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
             else if (window.location.href.indexOf("nw_overview") > -1)
