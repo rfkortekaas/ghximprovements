@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GHX Improvements
 // @namespace    rfkortekaas
-// @version      1.84
+// @version      1.85
 // @license      MIT
 // @homepage     https://github.com/rfkortekaas/ghximprovements
 // @updateURL    https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true
@@ -422,7 +422,7 @@ var cfg = new MonkeyConfig({
                                 $(this).parent().css('background', 'red');
                             }
                             else if (moment($(this).html(), 'DD-MM-YYYY').isSame(moment(), 'day')) {
-                                $(this).parent().css('background', 'green');
+                                $(this).parent().css('background', 'green').css('color', 'white');
                             }
                         });
                     }
@@ -470,6 +470,18 @@ var cfg = new MonkeyConfig({
                     Older.setDate(Older.getDate() - 100);
                     document.getElementById('reqdatefrom').value=Older.toISOString().slice(0,10);
                     $( ".buttonSmall" ).trigger( "click" );
+                }
+
+                if (color_order_lines) {
+                    $('tr:gt(0) td#td-status').each(function () {
+                        if ($(this).text().match('ATB ingediend')) {
+                            $(this).parent().css('background', 'red');
+                        }
+                        else if ($(this).text().match('Goed te Keuren')) {
+                            $(this).parent().css('background', 'orange');
+                        }
+                    });
+
                 }
             }
             else if ((window.location.href.indexOf("nw_browse") > -1) || (window.location.href.indexOf("nw_productRange") > -1))
@@ -551,7 +563,7 @@ function ExtendedNewLine(order_unit, cost_type, vat)
 }
 
 // Price cannot contain a comma; should be replaced with a dot
-// Function is run on focus out of the price entry
+// Function runs on focus out of the price entry
 function ValidatePrice(event)
 {
     // Select the input field using the current event target id and call a function to replace the comma with a dot
