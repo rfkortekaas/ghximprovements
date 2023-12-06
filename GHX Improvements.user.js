@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GHX Improvements
 // @namespace    rfkortekaas
-// @version      1.85
+// @version      1.86
 // @license      MIT
 // @homepage     https://github.com/rfkortekaas/ghximprovements
 // @updateURL    https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true
@@ -479,6 +479,9 @@ var cfg = new MonkeyConfig({
                         }
                         else if ($(this).text().match('Goed te Keuren')) {
                             $(this).parent().css('background', 'orange');
+                        }
+                        else if ($(this).text().match('In Bewerking')) {
+                            $(this).parent().css('background', 'green').css('color', 'white');
                         }
                     });
 
