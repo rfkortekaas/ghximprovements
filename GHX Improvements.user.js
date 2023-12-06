@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GHX Improvements
 // @namespace    rfkortekaas
-// @version      1.86
+// @version      1.87
 // @license      MIT
 // @homepage     https://github.com/rfkortekaas/ghximprovements
 // @updateURL    https://github.com/rfkortekaas/ghximprovements/blob/master/GHX%20Improvements.user.js?raw=true
@@ -492,7 +492,7 @@ var cfg = new MonkeyConfig({
                 if (open_in_tab)
                 {
                     // Loop over each shop button
-                    $(".shop-button").each(function()
+                    $(".shop-button, #shop-button").each(function()
                     {
                         // Select the existing onClick attribute and extract the catalogid from this
                         var click = $(this).attr("onclick");
